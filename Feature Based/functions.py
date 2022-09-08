@@ -1,10 +1,6 @@
 import cv2 as cv
 import numpy as np
 import copy
-from skimage import io, feature
-from scipy import ndimage
-import matplotlib.pyplot as plt
-
 
 # Setup for functions
 
@@ -101,6 +97,7 @@ def crossCorellation(image1, image2):
     return score
 
 
+# Function that takes 2 images as input and returns blended image as output, used to visually show registration algorithm performance
 def overlayImages(image1, image2):
     # For image 1 - turn off red and green channels
     b = image1.copy()
