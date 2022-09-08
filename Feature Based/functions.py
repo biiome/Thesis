@@ -1,6 +1,9 @@
 import cv2 as cv
 import numpy as np
 import copy
+from skimage import io, feature
+from scipy import ndimage
+
 
 # Setup for functions
 
@@ -68,13 +71,30 @@ def featureMatching(features0, features1):
 
 
 def absDifference(image1, image2):
+    # Set kernel for erosion operation
+    kernel = np.ones((3, 3), np.uint8)
+
+    # Apply gaussian blur
+    blur1 = cv.GaussianBlur(image1, (3, 3), 0)
+    blur2 = cv.GaussianBlur(image2, (3, 3), 0)
+
     # Convert images to grayscale
-    image1_gray = cv.cvtColor(image1, cv.COLOR_RGB2GRAY)
-    image2_gray = cv.cvtColor(image2, cv.COLOR_RGB2GRAY)
+    image1_gray = cv.cvtColor(blur1, cv.COLOR_RGB2GRAY)
+    image2_gray = cv.cvtColor(blur2, cv.COLOR_RGB2GRAY)
 
     # Take absolute difference of 2 images
     abs_difference = cv.absdiff(image1_gray, image2_gray)
 
+    erosion = cv.erode(abs_difference, kernel, iterations=1)
+
     # Display absolute difference image
-    cv.imshow("Absolute Difference Image", abs_difference)
+    cv.imshow("Absolute Difference Image", erosion)
     cv.waitKey(0)
+
+
+def crossCorellation(image1, image2):
+    # Calculate normalised cross-corellation between two input images using in-bult OpenCV methods
+    crossCorellation = cv.matchTemplate(image1, image2, cv.TM_CCORR_NORMED)
+
+    score = "{0:.2%}".format(crossCorellation[0][0])
+    return score
