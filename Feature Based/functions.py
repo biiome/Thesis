@@ -3,6 +3,7 @@ import numpy as np
 import copy
 from skimage import io, feature
 from scipy import ndimage
+import matplotlib.pyplot as plt
 
 
 # Setup for functions
@@ -98,3 +99,24 @@ def crossCorellation(image1, image2):
 
     score = "{0:.2%}".format(crossCorellation[0][0])
     return score
+
+
+def overlayImages(image1, image2):
+    # For image 1 - turn off red and green channels
+    b = image1.copy()
+    b[:, :, 1] = 0
+    b[:, :, 2] = 0
+
+    # For image 2 - turn off green and blue channels
+    r = image2.copy()
+    r[:, :, 0] = 0
+    r[:, :, 1] = 0
+
+    # Overlay image1(b) and image2(r)
+    blended = cv.addWeighted(b, 0.5, r, 0.5, 0)
+    cv.imshow("red image", b)
+    cv.imshow("blue image", r)
+    cv.imshow("blended image", blended)
+    cv.waitKey(0)
+
+    return blended

@@ -8,19 +8,21 @@ from functions import (
     featureMatching,
     absDifference,
     crossCorellation,
+    overlayImages,
 )
 
 
-OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
-OCT_File_List = []
-ATT_Folder_Root = "Sample Images\Image_Set_1\Attenuation Images"
+# OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
+# OCT_Folder_Root = "Sample Images\Image_Set_1\OCT Images"
+# OCT_File_List = []
+# ATT_Folder_Root = "Sample Images\Image_Set_1\Attenuation Images"
 
-for root, dirs, files in os.walk(os.path.abspath(OCT_Folder_Root)):
-    for file in files:
-        # print(os.path.join(root, file))
-        OCT_File_List.append(os.path.join(root, file))
+# for root, dirs, files in os.walk(os.path.abspath(OCT_Folder_Root)):
+#     for file in files:
+#         # print(os.path.join(root, file))
+#         OCT_File_List.append(os.path.join(root, file))
 
-OCT_File_List.reverse()
+# OCT_File_List.reverse()
 
 img0_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\output.png"
 img1_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p5.png"
@@ -39,6 +41,7 @@ img2_gray = cv.cvtColor(img2, cv.COLOR_RGB2GRAY)
 score = crossCorellation(img0, img2)
 print(score)
 
+blended = overlayImages(img0, img2)
 
 # test = absDifference(img0, img1)
 # cv.imshow("test", test)
