@@ -14,20 +14,20 @@ OCT_File_List = []
 ATT_Folder_Root = "Sample Images/Image_Set_1/Attenuation Images/"
 ATT_File_List = []
 
-# Populate OCT_File_List and reverse the order of the files
+# Populate OCT_File_List
 for root, dirs, files in os.walk(os.path.abspath(OCT_Folder_Root)):
     for file in files:
         # print(os.path.join(root, file))
         OCT_File_List.append(os.path.join(root, file))
 
-OCT_File_List.reverse()
-
-# Populate ATT_File_List and reverse the order of the files
+# Populate ATT_File_List
 for root, dirs, files in os.walk(os.path.abspath(ATT_Folder_Root)):
     for file in files:
         # print(os.path.join(root, file))
         ATT_File_List.append(os.path.join(root, file))
 
+# Reverse list order so that operations can be performed in the correct order
+OCT_File_List.reverse()
 ATT_File_List.reverse()
 
 
@@ -37,25 +37,18 @@ ATT_File_List.reverse()
 # att0 = cv.imread(ATT_Folder_Root + "Attenuation_p1.png")
 # att1 = cv.imread(ATT_Folder_Root + "Attenuation_p6.png")
 
-# Reverse file lists so that operations can be performed in the correct order
-list = sorted(OCT_File_List)
-list.reverse()
 
-ATT_list = sorted(ATT_File_List)
-ATT_list.reverse()
-
-
-# Set up table of primes
+# Set up table of prime images
 Prime_Images = [
-    cv.imread(OCT_Folder_Root + list[0]),
+    cv.imread(OCT_File_List[0]),
 ]
 
 
-for i in range(0, len(list)):
-
+for i in range(0, len(OCT_File_List)):
+    print(i)
     # Read in images
-    img0 = cv.imread(list[i])
-    img1 = cv.imread(list[i + 1])
+    img0 = Prime_Images[i]
+    img1 = cv.imread(OCT_File_List[i + 1])
 
     # Convert OCT images to greyscale
     img0_gray = cv.cvtColor(img0, cv.COLOR_RGB2GRAY)
@@ -93,20 +86,22 @@ for i in range(0, len(list)):
     output[:, :, 2] = (1.0 - alpha) * img1[:, :, 2] + alpha * warped[:, :, 2]
 
     # Doing the same to the attenuation data
-    output_att = np.zeros((height, width, 3), np.uint8)
-    alpha_att = warped[:, :, 2] / 255.0
-    output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped[:, :, 0]
-    output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped[:, :, 1]
-    output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped[:, :, 2]
+    # output_att = np.zeros((height, width, 3), np.uint8)
+    # alpha_att = warped[:, :, 2] / 255.0
+    # output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped[:, :, 0]
+    # output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped[:, :, 1]
+    # output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped[:, :, 2]
 
-    # Write image to
+    # Write registered image to Prime_Images list
+    Prime_Images.append(output)
+    cv.imwrite("output.png", output)
+    # print(output)
 
 # Write image to disk
-
-cv.imwrite("img01.jpg", output)
-cv.imwrite("att01.jpg", output_att)
-cv.imshow("Image 1", img0)
-cv.imshow("Image 2", img1)
-cv.imshow("Registered Image", output)
-cv.imshow("Registered Attenuation Image", output_att)
-cv.waitKey(0)
+# cv.imwrite("img01.jpg", output)
+# cv.imwrite("att01.jpg", output_att)
+# cv.imshow("Image 1", img0)
+# cv.imshow("Image 2", img1)
+# cv.imshow("Registered Image", output)
+# cv.imshow("Registered Attenuation Image", output_att)
+# cv.waitKey(0)
