@@ -1,0 +1,101 @@
+{
+  "main": {
+    "id": "859c7213382ec41e",
+    "type": "split",
+    "children": [
+      {
+        "id": "8fd05f4e58951a3d",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "BRITElab Team Meeting.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "de90ff1b7a3d9b97",
+    "type": "split",
+    "children": [
+      {
+        "id": "71c10fa4a58f86f6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "261ae56c33791827",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "eedff4a1c44948dc",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#meeting",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "e87fc07ef6940d2e",
+    "type": "split",
+    "children": [
+      {
+        "id": "9611d5b8f4d4e08d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "44808b0c761e91fe",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "BRITElab Team Meeting.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "8fd05f4e58951a3d",
+  "lastOpenFiles": [
+    "BRITElab Team Meeting.md",
+    "Feature-Based.md",
+    "Image Registration Approaches.md",
+    "Keypoint Detectors, Local Invariant Descriptors, and Keypoint Matching.md",
+    "Similarity Measures.md",
+    "1. Homepage.md"
+  ]
+}
