@@ -11,7 +11,7 @@ orb_detector = cv.ORB_create(
 
 ## Feature Matching setup
 LOWES_RATIO = 0.7
-MIN_MATCHES = 75
+MIN_MATCHES = 50
 index_params = dict(
     algorithm=6, table_number=6, key_size=10, multi_probe_level=2  # FLANN_INDEX_LSH
 )
