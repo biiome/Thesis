@@ -54,11 +54,13 @@ Registered_ATT = [
     cv.imread(ATT_File_List[0]),
 ]
 
+homography_matrix = []
 
 for i in range(0, len(OCT_File_List) - 1):
     print(i)
     # Read in images
-    img0 = Prime_Images[i]
+    # img0 = Prime_Images[i]
+    img0 = cv.imread(OCT_File_List[i])
     img1 = cv.imread(OCT_File_List[i + 1])
     att1 = cv.imread(ATT_File_List[i + 1])
 
@@ -78,12 +80,22 @@ for i in range(0, len(OCT_File_List) - 1):
         features0.matched_pts, features1.matched_pts, cv.RANSAC, 5.0
     )
 
+    homography_matrix.append(homography)
+
     # Save dimensions of image to be warped
     height, width, _ = img1.shape
 
     # Warp target image to source image
     warped = cv.warpPerspective(
         img0,
+        homography,
+        (width, height),
+        borderMode=cv.BORDER_CONSTANT,  # need to see if applying a border around the image would be a good idea to avoid errors
+        borderValue=(0, 0, 0, 0),
+    )
+
+    warped_att = cv.warpPerspective(
+        att1,
         homography,
         (width, height),
         borderMode=cv.BORDER_CONSTANT,  # need to see if applying a border around the image would be a good idea to avoid errors
@@ -100,9 +112,9 @@ for i in range(0, len(OCT_File_List) - 1):
     # Doing the same to the attenuation data
     output_att = np.zeros((height, width, 3), np.uint8)
     alpha_att = warped[:, :, 2] / 255.0
-    output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped[:, :, 0]
-    output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped[:, :, 1]
-    output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped[:, :, 2]
+    output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped_att[:, :, 1]
+    output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped_att[:, :, 0]
+    output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped_att[:, :, 2]
 
     # Write registered image to Prime_Images and Registered_ATT list
     Prime_Images.append(output)
@@ -119,6 +131,7 @@ for i in range(len(Prime_Images)):
     filename_att = "att " + str(i) + ".png"
     cv.imwrite(filename, Prime_Images[i], [cv.IMWRITE_PNG_COMPRESSION, 0])
     cv.imwrite(filename_att, Registered_ATT[i], [cv.IMWRITE_PNG_COMPRESSION, 0])
+    print(homography_matrix[1])
 
 
 # Write image to disk
