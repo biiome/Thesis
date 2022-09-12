@@ -1,7 +1,13 @@
 from genericpath import isfile
+from statistics import mode
 import cv2 as cv
 import numpy as np
-from functions import featureExtraction, featureMatching, absDifference
+from functions import (
+    featureExtraction,
+    featureMatching,
+    absDifference,
+    crossCorellation,
+)
 import os
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
@@ -38,17 +44,23 @@ ATT_File_List.reverse()
 # att1 = cv.imread(ATT_Folder_Root + "Attenuation_p6.png")
 
 
-# Set up table of prime images
+# Set up list of prime images
 Prime_Images = [
     cv.imread(OCT_File_List[0]),
 ]
 
+# Set up list of registered attenuation images
+Registered_ATT = [
+    cv.imread(ATT_File_List[0]),
+]
 
-for i in range(0, len(OCT_File_List)):
+
+for i in range(0, len(OCT_File_List) - 1):
     print(i)
     # Read in images
     img0 = Prime_Images[i]
     img1 = cv.imread(OCT_File_List[i + 1])
+    att1 = cv.imread(ATT_File_List[i + 1])
 
     # Convert OCT images to greyscale
     img0_gray = cv.cvtColor(img0, cv.COLOR_RGB2GRAY)
@@ -86,16 +98,28 @@ for i in range(0, len(OCT_File_List)):
     output[:, :, 2] = (1.0 - alpha) * img1[:, :, 2] + alpha * warped[:, :, 2]
 
     # Doing the same to the attenuation data
-    # output_att = np.zeros((height, width, 3), np.uint8)
-    # alpha_att = warped[:, :, 2] / 255.0
-    # output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped[:, :, 0]
-    # output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped[:, :, 1]
-    # output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped[:, :, 2]
+    output_att = np.zeros((height, width, 3), np.uint8)
+    alpha_att = warped[:, :, 2] / 255.0
+    output_att[:, :, 0] = (1.0 - alpha) * att1[:, :, 0] + alpha * warped[:, :, 0]
+    output_att[:, :, 1] = (1.0 - alpha) * att1[:, :, 1] + alpha * warped[:, :, 1]
+    output_att[:, :, 2] = (1.0 - alpha) * att1[:, :, 2] + alpha * warped[:, :, 2]
 
-    # Write registered image to Prime_Images list
+    # Write registered image to Prime_Images and Registered_ATT list
     Prime_Images.append(output)
-    cv.imwrite("output.png", output)
+    Registered_ATT.append(output_att)
+    # cv.imwrite(filename, output, [cv.IMWRITE_PNG_COMPRESSION, 0])
     # print(output)
+    image1 = Prime_Images[i]
+    image2 = Prime_Images[i - 1]
+    test = crossCorellation(image1, image2)
+    print(test)
+
+for i in range(len(Prime_Images)):
+    filename = str(i) + ".png"
+    filename_att = "att " + str(i) + ".png"
+    cv.imwrite(filename, Prime_Images[i], [cv.IMWRITE_PNG_COMPRESSION, 0])
+    cv.imwrite(filename_att, Registered_ATT[i], [cv.IMWRITE_PNG_COMPRESSION, 0])
+
 
 # Write image to disk
 # cv.imwrite("img01.jpg", output)
