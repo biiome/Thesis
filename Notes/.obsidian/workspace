@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "BRITElab Team Meeting.md",
+            "file": "Lowes Ratio Test.md",
             "mode": "source",
             "source": false
           }
@@ -49,8 +49,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -71,7 +70,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BRITElab Team Meeting.md",
+                "file": "Lowes Ratio Test.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -91,11 +90,11 @@
   },
   "active": "8fd05f4e58951a3d",
   "lastOpenFiles": [
-    "BRITElab Team Meeting.md",
-    "Feature-Based.md",
-    "Image Registration Approaches.md",
-    "Keypoint Detectors, Local Invariant Descriptors, and Keypoint Matching.md",
     "Similarity Measures.md",
+    "Keypoint Detectors, Local Invariant Descriptors, and Keypoint Matching.md",
+    "Image Registration Approaches.md",
+    "Feature-Based.md",
+    "BRITElab Team Meeting.md",
     "1. Homepage.md"
   ]
 }
