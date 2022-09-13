@@ -72,6 +72,14 @@ for i in range(0, len(OCT_File_List) - 1):
     features0 = featureExtraction(img0_gray)
     features1 = featureExtraction(img1_gray)
 
+    # Display detected keypoints in image
+    # img0_kps = cv.drawKeypoints(img0, features0.kps, None, flags=None)
+    # img1_kps = cv.drawKeypoints(img1, features0.kps, None, flags=None)
+
+    # cv.imshow("Image 0 keypoints", img0_kps)
+    # cv.imshow("Image 1 keypoints", img1_kps)
+    # cv.waitKey(0)
+
     # Match features using feature matching function
     matches = featureMatching(features0, features1)
 
