@@ -1,13 +1,6 @@
-from genericpath import isfile
-from statistics import mode
 import cv2 as cv
 import numpy as np
-from functions import (
-    featureExtraction,
-    featureMatching,
-    absDifference,
-    crossCorellation,
-)
+from functions import *
 import os
 from tkinter import Tk
 from tkinter.filedialog import askdirectory

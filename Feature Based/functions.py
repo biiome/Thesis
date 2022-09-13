@@ -4,12 +4,12 @@ import copy
 
 # Setup for functions
 
-## Create an ORB detector with 10000 features
+# Create an ORB detector with 10000 features
 orb_detector = cv.ORB_create(
     nfeatures=10000, scaleFactor=1.2, scoreType=cv.ORB_HARRIS_SCORE
 )
 
-## Feature Matching setup
+# Feature Matching setup
 LOWES_RATIO = 0.7
 MIN_MATCHES = 50
 index_params = dict(
@@ -31,7 +31,7 @@ class featureExtraction:
 
         # Detect keypoints and descriptors
         self.kps, self.des = orb_detector.detectAndCompute(self.img, None)
-        # Draw detected kepoints in source image in new output image
+        # Draw detected keypoints in source image in new output image
         self.img_kps = cv.drawKeypoints(
             self.img,  # source image
             self.kps,  # keypoints in source image
