@@ -10,6 +10,9 @@ The fundamental steps for feature based image registration are as follows:
 * Once identified,  features can be represented by their point representative's centre of gravity, line endings, distinctive point which are called control points (CPs)
 
 **2. Feature Matching**
+- In this step, the correspondence between the features detected in the sensed image and those detected in the reference image is established
+- Various descriptors and similarity measures are used for matching purposes
+
 **3. Transformation Model Estimation**
 **4. Image Transformation & Resampling**
 

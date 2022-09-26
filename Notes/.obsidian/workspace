@@ -4,12 +4,24 @@
     "type": "split",
     "children": [
       {
+        "id": "3cacb50918f3865d",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Accurate Image Alignment and Registration using OpenCV.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
         "id": "8fd05f4e58951a3d",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Homography Matrix.md",
+            "file": "Feature-Based.md",
             "mode": "source",
             "source": false
           }
@@ -70,7 +82,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Homography Matrix.md",
+                "file": "Feature-Based.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -90,12 +102,15 @@
   },
   "active": "8fd05f4e58951a3d",
   "lastOpenFiles": [
-    "Lowes Ratio Test.md",
-    "Similarity Measures.md",
-    "Keypoint Detectors, Local Invariant Descriptors, and Keypoint Matching.md",
-    "Image Registration Approaches.md",
+    "Descriptors.md",
     "Feature-Based.md",
-    "BRITElab Team Meeting.md",
-    "1. Homepage.md"
+    "Keypoints.md",
+    "Accurate Image Alignment and Registration using OpenCV.md",
+    "Useful Notes for presentation.md",
+    "Similarity Measures.md",
+    "Homography Matrix.md",
+    "Image Registration Approaches.md",
+    "Lowes Ratio Test.md",
+    "Python -  Classes, Objects, Attributes and Instances.md"
   ]
 }
