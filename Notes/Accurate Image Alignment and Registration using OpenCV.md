@@ -57,7 +57,7 @@ matched_images = cv.drawMatches (img0, features0.kps, img1, features1.kps, match
 
 ### 2.3 Homography Computation
 - After computing the pairs of matching features of the input images, it is possible to compute the homography matrix.
-- It takes as input the matching points on each image and using RANSAC (random sample consensus) we are able to efficiently compute the [[projective matrix]].
+- It takes as input the matching points on each image and using RANSAC (random sample consensus) we are able to efficiently compute the [[Projective Matrix]].
 - The feature pairs are filtered again at this stage so that only the inliers are used to compute the homography
 	- The removes the outliers from the calculation, which leads to a minimisation of the error associated with the homography computation
 

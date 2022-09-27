@@ -75,38 +75,47 @@ for i in range(0, len(OCT_File_List) - 1):
 
     # Display detected keypoints in image
 
-    keypoints_without_size = np.copy(img0)
-    keypoints_with_size = np.copy(img0)
+    # keypoints_without_size = np.copy(img0)
+    # keypoints_with_size = np.copy(img0)
 
-    cv.drawKeypoints(img0, features0.kps, keypoints_without_size, color=(0, 255, 0))
-    cv.drawKeypoints(
-        img0,
-        features0.kps,
-        keypoints_with_size,
-        flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS,
-    )
-
+    # cv.drawKeypoints(img0, features0.kps, keypoints_without_size, color=(0, 255, 0))
+    # cv.drawKeypoints(
+    #     img0,
+    #     features0.kps,
+    #     keypoints_with_size,
+    #     flags=cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS,
+    # )
+    #
     # Display image with and without keypoints size
     # fx, plots = plt.subplots(1, 2, figsize=(20, 10))
-
+    #
     # plots[0].set_title("Original Image")
     # plots[0].imshow(img0, cmap="gray")
-
+    #
     # plots[1].set_title("Detected Keypoints")
     # plots[1].imshow(keypoints_without_size, cmap="gray")
-
+    #
     # plots[0].set_xlabel("Pixels")
     # plots[0].set_ylabel("Pixels")
     # plots[1].set_xlabel("Pixels")
     # plots[1].set_ylabel("Pixels")
-
+    #
     # scalebar = ScaleBar(1, "px", dimension="pixel-length", length_fraction=0.2)
     # plt.gca().add_artist(scalebar)
-
+    #
     # plt.show()
 
     # Match features using feature matching function
     matches = featureMatching(features0, features1)
+
+    # Draw first 30 matches.
+    # img3 = cv.drawMatches(
+    #     img0, features0.kps, img1, features1.kps, matches[:30], None, flags=2
+    # )
+    #
+    # plt.imshow(img3)
+    # plt.axis("off")
+    # plt.show()
 
     # Perform homography calculation using RANSAC to find the transformation matrix
     homography, _ = cv.findHomography(

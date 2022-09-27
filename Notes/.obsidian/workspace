@@ -9,19 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Accurate Image Alignment and Registration using OpenCV.md",
-            "mode": "source",
-            "source": false
-          }
-        }
-      },
-      {
-        "id": "8fd05f4e58951a3d",
-        "type": "leaf",
-        "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Feature-Based.md",
+            "file": "Similarity Measures.md",
             "mode": "source",
             "source": false
           }
@@ -65,8 +53,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "e87fc07ef6940d2e",
@@ -82,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Feature-Based.md",
+                "file": "Similarity Measures.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,17 +87,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "8fd05f4e58951a3d",
+  "active": "3cacb50918f3865d",
   "lastOpenFiles": [
-    "Descriptors.md",
-    "Feature-Based.md",
-    "Keypoints.md",
-    "Accurate Image Alignment and Registration using OpenCV.md",
-    "Useful Notes for presentation.md",
-    "Similarity Measures.md",
+    "Projective Matrix.md",
     "Homography Matrix.md",
-    "Image Registration Approaches.md",
+    "Accurate Image Alignment and Registration using OpenCV.md",
+    "Attachments/Pasted image 20220822211510.png",
+    "Transformation matrix.md",
     "Lowes Ratio Test.md",
-    "Python -  Classes, Objects, Attributes and Instances.md"
+    "Feature-Based.md",
+    "Descriptors.md",
+    "Keypoints.md",
+    "Useful Notes for presentation.md"
   ]
 }
