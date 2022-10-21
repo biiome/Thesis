@@ -9,10 +9,7 @@ img1 = cv.imread(
 )  # Image to be aligned.
 img2 = cv.imread(
     r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Test_Images\im2.jpg"
-)  # Reference image.
-# img3 = cv.imread(
-#     "./Sample Images/Image_Set_1/Attenuation_p1.png"
-# )  # Matching attenuation image
+)
 
 # Convert images to grayscale
 img1_g = cv.cvtColor(img1, cv.COLOR_RGB2GRAY)

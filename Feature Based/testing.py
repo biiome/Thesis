@@ -3,6 +3,8 @@ import cv2 as cv
 import numpy as np
 from tkinter import Tk
 from tkinter.filedialog import askdirectory
+import matplotlib.pyplot as plt
+from matplotlib_scalebar.scalebar import ScaleBar
 from functions import (
     featureExtraction,
     featureMatching,
@@ -11,42 +13,17 @@ from functions import (
     overlayImages,
 )
 
+img0_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p7.png"
+img1_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p5.png"
+# img0_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\7.png"
+# img1_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Registered Image.png"
 
-# OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
-# OCT_Folder_Root = "Sample Images\Image_Set_1\OCT Images"
-# OCT_File_List = []
-# ATT_Folder_Root = "Sample Images\Image_Set_1\Attenuation Images"
-
-# for root, dirs, files in os.walk(os.path.abspath(OCT_Folder_Root)):
-#     for file in files:
-#         # print(os.path.join(root, file))
-#         OCT_File_List.append(os.path.join(root, file))
-
-# OCT_File_List.reverse()
-
-img0_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Feature Based\1.png"
-# img0_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p6.png"
-img1_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p4.png"
-# img2_path = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images\OCT_p6.png"
-
-img0 = cv.imread(img0_path)  # 6 prime
-img1 = cv.imread(img1_path)  # Image 5
-# img2 = cv.imread(img2_path)  # Image 6
+img0 = cv.imread(img0_path)
+img1 = cv.imread(img1_path)
 
 
 img0_gray = cv.cvtColor(img0, cv.COLOR_RGB2GRAY)
 img1_gray = cv.cvtColor(img1, cv.COLOR_RGB2GRAY)
-# img2_gray = cv.cvtColor(img2, cv.COLOR_RGB2GRAY)
-
-# Calculate Normalised Crosscorrelation of 2 images
-# score = crossCorellation(img0, img2)
-# print(score)
-
-# blended = overlayImages(img0, img2)
-
-# test = absDifference(img0, img1)
-# cv.imshow("test", test)
-# cv.waitKey(0)
 
 
 # for method in methods:
@@ -58,39 +35,51 @@ img1_gray = cv.cvtColor(img1, cv.COLOR_RGB2GRAY)
 
 features0 = featureExtraction(img0_gray)
 features1 = featureExtraction(img1_gray)
-# features2 = featureExtraction(img2_gray)
 
 
 matches = featureMatching(features0, features1)
 
 # print(matches)
 
-print(features0.matched_pts)
-print(features1.matched_pts)
+# print(features0.matched_pts)
+# print(features1.matched_pts)
 
+# Draw first 30 matches.
+# img3 = cv.drawMatches(img0, features0.kps, img1, features1.kps, matches, None, flags=2)
 
-# print(matches2)
+# plt.imshow(img3)
+# plt.axis("off")
+# plt.show()
 
-# homography, _ = cv.findHomography(
-#     features0.matched_pts, features1.matched_pts, cv.RANSAC, 5.0
-# )
+homography, _ = cv.findHomography(
+    features0.matched_pts, features1.matched_pts, cv.RANSAC, 5.0
+)
 
+height, width, _ = img1.shape
 
-# Prime_Images = [
-#     cv.imread("../" + OCT_Folder_Root + list[0]),
-# ]
+warped = cv.warpPerspective(
+    img0,
+    homography,
+    (width, height),
+    borderMode=cv.BORDER_CONSTANT,  # need to see if applying a border around the image would be a good idea to avoid errors
+    borderValue=(0, 0, 0, 0),
+)
 
-# for i in len(list) - 1:
+output = np.zeros((height, width, 3), np.uint8)
+alpha = warped[:, :, 2] / 255.0
+output[:, :, 0] = (1.0 - alpha) * img1[:, :, 0] + alpha * warped[:, :, 0]
+output[:, :, 1] = (1.0 - alpha) * img1[:, :, 1] + alpha * warped[:, :, 1]
+output[:, :, 2] = (1.0 - alpha) * img1[:, :, 2] + alpha * warped[:, :, 2]
 
-#     # Convert images to grayscale
-#     img0_gray = cv.cvtColor(i, cv.COLOR_RGB2GRAY)
-#     img1_gray = cv.cvtColor(i + 1, cv.COLOR_RGB2GRAY)
+# Output registered image
+cv.imwrite("test.png", output, [cv.IMWRITE_PNG_COMPRESSION, 0])
 
-#     # Extract features
-#     features0 = featureExtraction(img0_gray)
-#     features1 = featureExtraction(img1_gray)
+# # Canculate Absolute Difference
+# absDiff = absDifference(img0, output)
 
-#     Prime_Images[i + 1] = some_func(prime[i], list[i + 1])
+# Overlay Images
+overlay = overlayImages(img1, output)
 
-
-# print(list)
+# Calculate Cross Correlation
+cross = crossCorellation(img1, output)
+print(cross)

@@ -1,6 +1,8 @@
 import cv2 as cv
 import numpy as np
 import copy
+import matplotlib.pyplot as plt
+from matplotlib_scalebar.scalebar import ScaleBar
 
 # Setup for functions
 
@@ -111,9 +113,41 @@ def overlayImages(image1, image2):
 
     # Overlay image1(b) and image2(r)
     blended = cv.addWeighted(b, 0.5, r, 0.5, 0)
-    cv.imshow("red image", b)
-    cv.imshow("blue image", r)
-    cv.imshow("blended image", blended)
-    cv.waitKey(0)
+    # cv.imshow("red image", b)
+    # cv.imshow("blue image", r)
+    # cv.imshow("blended image", blended)
+    # cv.waitKey(0)
+
+    fx, plots = plt.subplots(1, 3, figsize=(25, 10))
+    plots[0].set_title("Registered Image - Only Red Channel")
+    plots[1].set_title("Target Image - Only Blue Channel")
+    plots[2].set_title("Registered Image Overlayed with Target Image")
+
+    plots[0].imshow(r)
+    plots[1].imshow(b)
+    plots[2].imshow(blended)
+
+    plots[0].set_xlabel("Pixels")
+    plots[1].set_xlabel("Pixels")
+    plots[2].set_xlabel("Pixels")
+
+    plots[0].set_ylabel("Pixels")
+    plots[1].set_ylabel("Pixels")
+    plots[2].set_ylabel("Pixels")
+
+    scalebar = ScaleBar(1, "px", dimension="pixel-length", length_fraction=0.2)
+    scalebar1 = ScaleBar(1, "px", dimension="pixel-length", length_fraction=0.2)
+    scalebar2 = ScaleBar(1, "px", dimension="pixel-length", length_fraction=0.2)
+    plots[0].add_artist(scalebar)
+    plots[1].add_artist(scalebar1)
+    plots[2].add_artist(scalebar2)
+    plt.show()
+
+    plt.imshow(blended)
+    plt.xlabel("Pixels")
+    plt.ylabel("Pixels")
+    scalebar3 = ScaleBar(1, "px", dimension="pixel-length", length_fraction=0.2)
+    plt.gca().add_artist(scalebar3)
+    plt.show()
 
     return blended

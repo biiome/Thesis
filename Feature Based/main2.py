@@ -68,6 +68,38 @@ for i in range(0, len(OCT_File_List) - 1):
     # Save calculated homography matrix to homography_matrix list
     homography_matrix.append(homography)
 
+# Multiply all the homography matrix together
+
+final_H = homography_matrix[0]
+for h in homography_matrix[1:]:
+    final_H = np.matmul(final_H, h)
+
+# Apply homography matrix to original image
+
+img_location = OCT_File_List[0]
+img = cv.imread(img_location)
+
+height, width, _ = img.shape
+
+warped = cv.warpPerspective(
+    img,
+    homography,
+    (width, height),
+    borderMode=cv.BORDER_CONSTANT,  # need to see if applying a border around the image would be a good idea to avoid errors
+    borderValue=(100, 100, 100, 100),
+)
+
+output = np.zeros((height, width, 3), np.uint8)
+alpha = warped[:, :, 2] / 255.0
+output[:, :, 0] = (1.0 - alpha) * img0[:, :, 0] + alpha * warped[:, :, 0]
+output[:, :, 1] = (1.0 - alpha) * img0[:, :, 1] + alpha * warped[:, :, 1]
+output[:, :, 2] = (1.0 - alpha) * img0[:, :, 2] + alpha * warped[:, :, 2]
+
+cv.imwrite("Registered Image.png", output, [cv.IMWRITE_PNG_COMPRESSION, 0])
+corellation = crossCorellation(Registered_OCT[0], output)
+print(corellation)
+
+"""
 for i in range(len(homography_matrix)):
     print(i)
     homography = homography_matrix[i]
@@ -105,3 +137,5 @@ original_image = cv.imread(original_image_path)
 final_image = cv.imread(final_image_path)
 corellation = crossCorellation(original_image, final_image)
 print(corellation)
+
+"""

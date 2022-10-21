@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Similarity Measures.md",
+            "file": "Descriptors.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Similarity Measures.md",
+                "file": "Descriptors.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "3cacb50918f3865d",
   "lastOpenFiles": [
+    "Keypoints.md",
+    "What is the best feature detector.md",
+    "Descriptors.md",
+    "Feature-Based.md",
+    "Useful Notes for presentation.md",
+    "Similarity Measures.md",
     "Projective Matrix.md",
     "Homography Matrix.md",
     "Accurate Image Alignment and Registration using OpenCV.md",
-    "Attachments/Pasted image 20220822211510.png",
-    "Transformation matrix.md",
-    "Lowes Ratio Test.md",
-    "Feature-Based.md",
-    "Descriptors.md",
-    "Keypoints.md",
-    "Useful Notes for presentation.md"
+    "Attachments/Pasted image 20220822211510.png"
   ]
 }
