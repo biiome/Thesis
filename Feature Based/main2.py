@@ -8,9 +8,9 @@ from tkinter.filedialog import askdirectory
 
 # Load data
 # OCT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images"
-ATT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\Attenuation Images"
+# ATT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\Attenuation Images"
 OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
-# ATT_Folder_Root = askdirectory(title="Select folder containing OCT images")
+ATT_Folder_Root = askdirectory(title="Select folder containing OCT images")
 OCT_File_List = []
 ATT_File_List = []
 
@@ -62,7 +62,7 @@ for i in range(0, len(OCT_File_List) - 1):
     # Match features using feature matching function
     matches = featureMatching(features0, features1)
     print(len(features1.matched_pts))
-
+ 
     # Perform homography calculation using RANSAC to find the transformation matrix
     homography, _ = cv.findHomography(
         features0.matched_pts, features1.matched_pts, cv.RANSAC, 5.0
@@ -103,6 +103,7 @@ img_reference = cv.imread(OCT_File_List[0])
 corellation = crossCorellation(img_reference, output)
 print(corellation)
 
+# Ignore the section below this.
 """
 for i in range(len(homography_matrix)):
     print(i)
