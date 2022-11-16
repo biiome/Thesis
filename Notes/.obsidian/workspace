@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Descriptors.md",
+            "file": "Lowes Ratio Test.md",
             "mode": "source",
             "source": false
           }
@@ -53,7 +53,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "e87fc07ef6940d2e",
@@ -69,7 +70,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Descriptors.md",
+                "file": "Lowes Ratio Test.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,9 +90,9 @@
   },
   "active": "3cacb50918f3865d",
   "lastOpenFiles": [
+    "Descriptors.md",
     "Keypoints.md",
     "What is the best feature detector.md",
-    "Descriptors.md",
     "Feature-Based.md",
     "Useful Notes for presentation.md",
     "Similarity Measures.md",
