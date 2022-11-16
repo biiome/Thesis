@@ -5,11 +5,13 @@ The code was written and executed on Python 3.10.6. While is should work on all 
 ## 1. Install required packages
 * Once Python3 is installed we can install the necessary packages required to run the code.
 * This is done by opening a terminal windows in the project directory and running the following code:
+* 
 `pip install -r requirements.txt`
 
 ## 2. Running the program
 * To run the program you need to execute the main.py file
 * To execute the file, open a terminal window in the project directory and run the following code:
+
 `python ./main.py`
 * You can also open the file in your code editor of choise and run it through there
 
