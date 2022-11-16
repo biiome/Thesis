@@ -7,6 +7,8 @@ from tkinter import Tk
 from tkinter.filedialog import askdirectory
 
 # Load data
+
+## You can set the routes statically by replacing the OCT_Folder_Root and ATT_Folder_Root with the below 2 lines of code
 # OCT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images"
 # ATT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\Attenuation Images"
 OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
@@ -40,14 +42,14 @@ Registered_ATT = [
     cv.imread(ATT_File_List[0]),
 ]
 
-# Set up list to store homography data
+# Set up empty list to store homography data
 homography_matrix = []
 
+# For all OCT images
 for i in range(0, len(OCT_File_List) - 1):
     print(i)
-    # Read in images
+    # Read in image
     img0 = cv.imread(OCT_File_List[i])
-    # img0 = Prime_Images[i]
     img1 = cv.imread(OCT_File_List[i + 1])
     # att1 = cv.imread(ATT_File_List[i + 1])
 
@@ -62,7 +64,7 @@ for i in range(0, len(OCT_File_List) - 1):
     # Match features using feature matching function
     matches = featureMatching(features0, features1)
     print(len(features1.matched_pts))
- 
+
     # Perform homography calculation using RANSAC to find the transformation matrix
     homography, _ = cv.findHomography(
         features0.matched_pts, features1.matched_pts, cv.RANSAC, 5.0
@@ -72,13 +74,11 @@ for i in range(0, len(OCT_File_List) - 1):
     homography_matrix.append(homography)
 
 # Multiply all the homography matrix together
-
 final_H = homography_matrix[0]
 for h in homography_matrix[1:]:
     final_H = np.matmul(final_H, h)
 
 # Apply homography matrix to original image
-
 img_location = OCT_File_List[0]
 img = cv.imread(img_location)
 
@@ -92,12 +92,14 @@ warped = cv.warpPerspective(
     # borderValue=(100, 100, 100, 100),
 )
 
+# Rescale image to original dimensions
 output = np.zeros((height, width, 3), np.uint8)
 alpha = warped[:, :, 2] / 255.0
 output[:, :, 0] = (1.0 - alpha) * img0[:, :, 0] + alpha * warped[:, :, 0]
 output[:, :, 1] = (1.0 - alpha) * img0[:, :, 1] + alpha * warped[:, :, 1]
 output[:, :, 2] = (1.0 - alpha) * img0[:, :, 2] + alpha * warped[:, :, 2]
 
+# Output registered image
 cv.imwrite("Registered Image.png", output, [cv.IMWRITE_PNG_COMPRESSION, 0])
 img_reference = cv.imread(OCT_File_List[0])
 corellation = crossCorellation(img_reference, output)
