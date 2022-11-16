@@ -13,7 +13,7 @@ orb_detector = cv.ORB_create(
 
 # Feature Matching setup
 LOWES_RATIO = 0.7
-MIN_MATCHES = 50
+MIN_MATCHES = 5
 index_params = dict(
     algorithm=6, table_number=6, key_size=10, multi_probe_level=2  # FLANN_INDEX_LSH
 )
@@ -71,11 +71,11 @@ def featureMatching(features0, features1):
 
 def absDifference(image1, image2):
     # Set kernel for erosion operation
-    kernel = np.ones((3, 3), np.uint8)
+    kernel = np.ones((5, 5), np.uint8)
 
     # Apply gaussian blur
-    blur1 = cv.GaussianBlur(image1, (3, 3), 0)
-    blur2 = cv.GaussianBlur(image2, (3, 3), 0)
+    blur1 = cv.GaussianBlur(image1, (5, 5), 0)
+    blur2 = cv.GaussianBlur(image2, (5, 5), 0)
 
     # Convert images to grayscale
     image1_gray = cv.cvtColor(blur1, cv.COLOR_RGB2GRAY)
@@ -89,6 +89,7 @@ def absDifference(image1, image2):
     # Display absolute difference image
     cv.imshow("Absolute Difference Image", erosion)
     cv.waitKey(0)
+    return erosion
 
 
 def crossCorellation(image1, image2):

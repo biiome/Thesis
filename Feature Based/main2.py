@@ -7,8 +7,10 @@ from tkinter import Tk
 from tkinter.filedialog import askdirectory
 
 # Load data
-OCT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images"
+# OCT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\OCT Images"
 ATT_Folder_Root = r"C:\Users\Vraj\Documents\Thesis\Image-Algorithm\Sample Images\Image_Set_1\Attenuation Images"
+OCT_Folder_Root = askdirectory(title="Select folder containing OCT images")
+# ATT_Folder_Root = askdirectory(title="Select folder containing OCT images")
 OCT_File_List = []
 ATT_File_List = []
 
@@ -47,7 +49,7 @@ for i in range(0, len(OCT_File_List) - 1):
     img0 = cv.imread(OCT_File_List[i])
     # img0 = Prime_Images[i]
     img1 = cv.imread(OCT_File_List[i + 1])
-    att1 = cv.imread(ATT_File_List[i + 1])
+    # att1 = cv.imread(ATT_File_List[i + 1])
 
     # Convert OCT images to greyscale
     img0_gray = cv.cvtColor(img0, cv.COLOR_RGB2GRAY)
@@ -59,6 +61,7 @@ for i in range(0, len(OCT_File_List) - 1):
 
     # Match features using feature matching function
     matches = featureMatching(features0, features1)
+    print(len(features1.matched_pts))
 
     # Perform homography calculation using RANSAC to find the transformation matrix
     homography, _ = cv.findHomography(
@@ -86,7 +89,7 @@ warped = cv.warpPerspective(
     homography,
     (width, height),
     borderMode=cv.BORDER_CONSTANT,  # need to see if applying a border around the image would be a good idea to avoid errors
-    borderValue=(100, 100, 100, 100),
+    # borderValue=(100, 100, 100, 100),
 )
 
 output = np.zeros((height, width, 3), np.uint8)
@@ -96,7 +99,8 @@ output[:, :, 1] = (1.0 - alpha) * img0[:, :, 1] + alpha * warped[:, :, 1]
 output[:, :, 2] = (1.0 - alpha) * img0[:, :, 2] + alpha * warped[:, :, 2]
 
 cv.imwrite("Registered Image.png", output, [cv.IMWRITE_PNG_COMPRESSION, 0])
-corellation = crossCorellation(Registered_OCT[0], output)
+img_reference = cv.imread(OCT_File_List[0])
+corellation = crossCorellation(img_reference, output)
 print(corellation)
 
 """
